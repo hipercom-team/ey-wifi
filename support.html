@@ -1,0 +1,497 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="description" content="Your description goes here" />
+  <meta name="keywords" content="your,keywords,goes,here" />
+  <meta name="author" content="Your Name" />
+  <link rel="stylesheet" type="text/css" href="andreas00.css" media="screen,projection" />
+  <title>Ey-Wifi Module for ns-3 simulator</title>
+</head>
+
+<body>
+<div id="wrap">
+	<div id="header">
+	<!--  <font color=#b9d203 >green ns-3	<h1></h1>
+	<p><b><h2></h2></b></p>
+	</font> -->
+	</div>
+
+	<div id="leftside">
+		<h2 class="hide">Sample menu:</h2>
+		<ul class="avmenu">
+			<li><a class="current" href="index.html">Home</a></li>
+			<li><a href="mobsim-project.html">MobSim Project</a></li>
+			<li><a href="publications.html">Documentation</a></li>
+			<li><a href="download.html">Download</a></li>
+			<li><a href="support.html">Tutorial</a></li>
+			<ul class="avmenu">
+			<font color=#b9d203 >
+				<li><a href="#download">Downloading</font></a></li>
+				<li><a href="#Installing">Installing</a></li>
+				<li><a href="#Running">Running</a></li>
+				<li><a href="#Tracing">Tracing</a></li>
+				<li><a href="#Plotting">Plotting graphs</a></li>
+			</font>
+			</ul>
+			<li><a href="contact-us.html">Contact</a></li>
+		</ul>
+	</div>
+	<div id="extras">
+		<img src="img/logo-inria.png" height="60" width="200" class="center" alt="Example content image" />	
+		<h2>Related links:</h2>
+		<ul>
+			<li><a href="www.nsnam.org/tutorials.html">ns-3 tutorial</a></li>
+			<li><a href="http://www.nsnam.org/doxygen/index.html">Doxygen</a></li>
+		</ul>
+	</div>
+	
+    <div id="content">
+		<h1>Tutorial</h1>
+		<A NAME="download"><h2>Downloading Ey-Wifi</h2></A>
+		<p> You can download the EY-Wifi module  and build it using <b>bake</b>. <b>bake</b> is a tool for distributed integration and building, developed for the ns-3 project. One practice is to create a directory called repos in one’s home directory under which one can keep local Mercurial repositories.
+		You can get the bake code by typing the following instruction: </p>
+		<blockquote>
+		mkdir repos <br>
+		cd repos <br>
+		hg clone  http://code.nsnam.org/bake <br>
+		cd bake 
+		</blockquote>
+		We need to configure bake to download and build the Ey-Wifi module, that's why you should download the  appropriate configuration file :
+		<blockquote>
+		wget http://hipercom.inria.fr/Ey-Wifi/source/bakeconfEyWifi.xml
+		</blockquote>
+		To configure bake type the following instruction :
+
+		<blockquote>
+		./bake.py configure -e ey-wifi -c bakeconfEyWifi.xml
+		</blockquote>		
+		Next, try to download the module:
+		<blockquote>
+		./bake.py download -vvv
+		</blockquote>
+		should yield something like:
+		<blockquote>
+		 >> Searching for system dependency python-dev -  <br>
+		 >> Search python-dev - OK <br>
+		 >> Searching for system dependency pygraphviz - <br>
+		 >> Search pygraphviz - OK <br>
+		 >> Searching for system dependency pygoocanvas - <br>
+		 >> Search pygoocanvas - OK<br>
+		 >> Download pybindgen-0.16.0.825 - OK<br>
+		 >> Searching for system dependency g++ - <br>
+		 >> Search g++ - OK<br>
+		 >> Searching for system dependency qt4 - <br>
+		 >> Search qt4 - OK<br>
+		 >> Downloading netanim-3.103 - <br>
+		...
+		 >> Download netanim-3.103 - OK<br>
+		 ...<br>
+		 >> Download ns-3.16 - OK<br>
+		 ..<br>
+		 >> Downloading ey-wifi (target directory:ns-3.16) - <br>
+		 ...
+		  creating: ey-wifi/src/ey-wifi/test/<br>
+		  inflating: ey-wifi/src/ey-wifi/test/examples-to-run.py  <br>
+		  inflating: ey-wifi/src/ey-wifi/test/ey-wifi-test.cc  <br>
+		  inflating: ey-wifi/src/ey-wifi/wscript  <br>
+
+		 >> Download ey-wifi - OK <br>
+
+		</blockquote>
+		Now we are ready to build our distribution. The source code is under <b>source/ns-3.16/</b> directory :
+		<blockquote>
+		cd source/ns-3.16/
+		</blockquote>
+		Now type <b>ls</b> on src directory, you should see ey-wifi module.
+		<A NAME="Installing"><h2>Building Ey-Wifi</h2></A>
+
+		<p>The examples are not enabled by default. So, in order to run Ey-Wifi examples, you have to enable examples as follow: </p>
+		<blockquote>
+		./waf -d debug --enable-examples configure
+		</blockquote>
+		
+		<p>Otherwise, copy the example into the scratch folder and use waf to build it just like building any ns-3 script</p>
+		<blockquote>
+		cp  src/wifi/examples/ey-wifi-example.cc scratch/ey-wifi-example.cc <br>
+		</blockquote>
+
+		<p> We use <i>Waf</i> to build ns-3. </p>
+		<blockquote>
+		./waf
+		</blockquote>
+		<A NAME="Running"><h2>Running the first example</h2></A>
+		<p> We typically run scripts under the control of <i>Waf</i>. To run a program, simply use the <b>--run</b> option in <i>Waf</i>. The first example is located in <b>src/wifi/examples</b>. 			Let’s run it by typing the following, you should see the expected output: </p>
+		<blockquote>
+		./waf --run src/ey-wifi/examples/ey-wifi-example
+
+		Waf: Entering directory ‘/home/local/baccouch/INRIA/demo/bake/source/ns-3.16/build’<br>
+		Waf: Leaving directory ‘/home/local/baccouch/INRIA/demo/bake/source/ns-3.16/build’<br>
+		’build’ finished successfully (1.929s)<br>
+		50000000 ns Node 10.0.0.1 broadcasts packet.<br>
+		50000000 ns Node 10.0.0.2 broadcasts packet.<br>
+		50000000 ns Node 10.0.0.3 broadcasts packet.<br>
+		51623033 ns Node 10.0.0.1 received packet from node 10.0.0.2<br>
+		51623033 ns Node 10.0.0.3 received packet from node 10.0.0.2<br>
+		53468066 ns Node 10.0.0.2 received packet from node 10.0.0.3<br>
+		</blockquote>
+		<p> The goal of the first example is to simulate 3 nodes. Each node broadcasts a packet of 1000 bytes periodically.
+		<br><br>
+		<img src="img/first-example.png" height="50" width="300" class="center" alt="eyWifiExample" /> <br><br>
+		The actual code begins by module include files : </p>
+		<blockquote>
+		#include "ns3/core-module.h"<br>
+		#include "ns3/network-module.h"<br>
+		#include "ns3/internet-module.h"<br>
+		#include "ns3/ey-wifi-module.h"<br>
+		#include "ns3/mobility-module.h"<br>
+		</blockquote>
+		<p> The first step is to create 3 nodes that will connect via wifi link. The NodeContainer is used to do this.
+		</p>
+		<blockquote>
+		NodeContainer nodes;<br>
+		nodes.Create(size);
+		</blockquote>
+	
+		<p> Now we are going to set the mobility model. We use a <i>MobilityHelper</i> to set nodes stationnary on a grid model. First, we instanciate a <i>MobilityHelper</i> object. The we set 			the attributes handling the position of ndes. The distance between nodes is fixed to <b><i>step</i></b> meters. </p>
+		<blockquote>
+		MobilityHelper mobility;<br>
+		mobility.SetPositionAllocator("ns3::GridPositionAllocator", "MinX",<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	DoubleValue(0.0), "MinY", DoubleValue(0.0), "DeltaX",<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	DoubleValue(step), "DeltaY", DoubleValue(step), "GridWidth",<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	UintegerValue(5), "LayoutType", StringValue("RowFirst"));<br>
+		mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");<br>
+		mobility.Install(nodes);<br>
+		</blockquote>
+		<p> 
+		We create a <i>NetDeviceContainer</i> to keep track of the wifi netDevices and we install devices on the wifi nodes.
+		</p>
+		<blockquote>
+		NetDeviceContainer devices;
+		</blockquote>
+		
+	
+		<p> Then, we configure PHY and channel helpers. We create a ey-wifi channel using <i>EyYansWifiChannelHelper</i>. Default configuration is used in this example by calling 				<i>EyYansWifiChannelHelper::Default()</i> method. The PHY layer is created by calling <i>EyYansWifiPhyHelper</i>. For the physical layer, we used the EyYansErrorRateModel, already 			defined and documented in the API doxygen documentation. 
+		</p>
+	        <blockquote>
+	         EyYansWifiChannelHelper eyWifiChannel = EyYansWifiChannelHelper::Default();<br>
+	        EyYansWifiPhyHelper eyWifiPhy;<br>
+			eyWifiPhy.SetErrorRateModel("ns3::EyYansErrorRateModel");
+	       
+		</blockquote>
+		<p>Once these objects are created, we create the channel object and aggregate it the PHY layer, already created by the helper.</p>
+		<blockquote>
+		eyWifiPhy.SetChannel(eyWifiChannel.Create());
+		</blockquote>
+		<p> 
+		Now we focus on the MAC layer. Here we choose to work with a non QoS MAC, so we use <i>NqosWifiMacHelper</i> ato set MAC parameters.
+		</p>
+		<blockquote>
+		EyNqosWifiMacHelper eyWifiMac = EyNqosWifiMacHelper::Default();<br>
+		eyWifiMac.SetType("ns3::EyAdhocWifiMac");<br>
+		
+		</blockquote>
+		<p> We use the <i>WifiHelper</i> to create and connect wifi devices and channels.</p>
+		<blockquote>
+		EyWifiHelper eyWifi = EyWifiHelper::Default();
+		</blockquote>
+		<p> A new <i>RemoteStationManager</i> mode has been defined to support burst transmission. To enable active signaling in this scenario, we have to set the 
+		<span class="red">BurstMode</span> on <span class="red">true </span> as  follow : </p>
+		<blockquote>
+		eyWifi.SetRemoteStationManager("ns3::ConstantRateWifiManager", "BurstMode", BooleanValue(true));
+		</blockquote>
+		<p></p>
+		<p>Once the physical and the mac layers are defined, we install the configuration on the <i>NodeContainer</i>.</p>
+		<blockquote>
+		devices = eyWifi.Install(eyWifiPhy, eyWifiMac, nodes);
+		</blockquote>
+
+		<p>Now, our nodes, devices and channels are created but no protocol stacks are installed. We use <i>InternetStackHelper</i> to install these stacks. We only need to install these stacks 			on the <i>nodes</i> container </p>
+		<blockquote>
+		InternetStackHelper stack;<br>
+		stack.Install(nodes);
+		</blockquote>
+		<p> To assign IP addresses to our interfaces, we use the <i>Ipv4AddressHelper</i></p>
+		<blockquote>
+		Ipv4AddressHelper address;<br>
+		address.SetBase("10.0.0.0", "255.0.0.0");<br>
+		interfaces = address.Assign(devices);
+		</blockquote>
+		<p> The topology is built, so we need to install applications on nodes. Now, we will create two applications for transmitting and receiving data packets. Both applications will be 			installed on each node of the topology already built. </p>
+		<blockquote>
+		ReceivePacket(Ptr<Socket> socket)<br>
+		GenerateTraffic(Ptr<Socket> socket, uint32_t pktSize,uint32_t pktCount, Time pktInterval)
+		</blockquote>
+		<p>To generate traffic, we create a <i>socket</i> on each node. We provide the required attribute to the <i>socket</i> in the <i>Send</i> method (in this case the packetsize).
+		Then, we schedule the transmission every second. <b>GenerateTraffic</b> method is defined as follow :</p>
+		<blockquote>
+		if (pktCount > 0) {<br>
+		socket->Send(Create<Packet>(pktSize));<br>
+		Simulator::Schedule(pktInterval, &GenerateTraffic, socket, pktSize,pktCount - 1, pktInterval);<br>
+		Ptr<Ipv4> ipv4 = socket->GetNode()->GetObject<Ipv4>();<br>
+		Ipv4InterfaceAddress iaddr = ipv4->GetAddress(1, 0);<br>
+		Ipv4Address addri = iaddr.GetLocal();<br>
+
+		} else {<br>
+		socket->Close();<br>
+		}
+		
+		</blockquote>
+		<p>Another socket has been created to receive data. We provide to the  <i>RecvFrom</i> method the source Address of data.
+		The <b>ReceivePacket</b> method is defined as follow :</p>
+		<blockquote>
+		
+		Address sourceAddress;<br>
+		Ptr<Packet> p = socket->RecvFrom(sourceAddress);<br>
+		InetSocketAddress inetSourceAddr = InetSocketAddress::ConvertFrom(sourceAddress);<br>
+		Ipv4Address sender = inetSourceAddr.GetIpv4();<br>
+		Ptr<Ipv4> ipv4 = socket->GetNode()->GetObject<Ipv4>();<br>
+		Ipv4InterfaceAddress iaddr = ipv4->GetAddress(1, 0);<br>
+		Ipv4Address addri = iaddr.GetLocal();<br>
+		</blockquote>
+		<p>The last part of the code runs and cleans up the simulation, just like any ns-3 scenario.  </p>
+		<blockquote>
+		Simulator::Stop(Seconds(totalTime)); <br>
+		Simulator::Run();<br>
+		Simulator::Destroy();
+		</blockquote>
+		<A NAME="Tracing"><h2>Tracing</h2></A>
+		<p>The main goal of a simulation is to generate traces for study. 
+		To analyse the performance of our module and check state of the contending nodes, a tracing system has been implemented. 
+		The added tracing sources may enable generating informations about the begging and the end of the different phases of EY-NPMA scheme. 
+		It enables also tracing the number of idle and busy slots chosen by each node.
+		</p>
+		<h4>The Trace Sinks</h4>
+		We have provided an example showing how to use tracing in Ey-Wifi module. You can find the code in the examples folder as <i>ey-wifi-tracing-example.cc</i>.<br>
+		The main goal of this simulation is to get trace callbacks from the DcaTxop class indicating the beggining and the end of each phase ( elimination and yield phases) for the same 			scenario, as well as the number of slots of each phase.
+		Most of the code is explained in the section above. 
+		
+		The next functions have been added to implement the corresponding trace sink :
+		
+		<blockquote>
+		void EyWifiBurstBeginTrace(std::string context, uint32_t slots) {<br>
+		NS_LOG_UNCOND ("Burst Begin at "<< Simulator::Now().GetSeconds() << " slots " << slots);<br>
+		} <br>
+		void EyWifiBurstEndTrace(std::string context, uint32_t slots) {<br>
+		NS_LOG_UNCOND ("Burst End at "<< Simulator::Now().GetSeconds() << " slots " << slots);<br>
+		}
+		</blockquote>
+		
+		
+		<!--<blockquote>
+		void EyWifiYieldBeginTrace(std::string context, uint32_t slots) {<br>
+		NS_LOG_UNCOND ("Yield Begin at "<< Simulator::Now().GetSeconds() << " slots " << slots);<br>
+		}<br>
+		void EyWifiYieldEndTrace(std::string context, uint32_t slots) {<br>
+		NS_LOG_UNCOND ("Yield Drop at "<< Simulator::Now().GetSeconds() << " slots " << slots);<br>
+		}
+		</blockquote> -->
+		Once the trace sink function is defined, we have to connect it to the trace source.<br>
+		The trace sinks which handle the elimination phase will be connected to the “BurstTxBegin” and “BurstTxEnd” trace sources of the WifiNetDevice. 
+		These trace sources fires respectively when a burst is transmitted by the WifiNetDevice and at the end of the burst transmission.
+		
+		<blockquote>
+		pathBurstBegin<<"NodeList/*/DeviceList/*/$ns3::EyWifiNetDevice/Phy/BurstTxBegin";
+		Config::Connect(
+		pathBurstBegin.str(),
+		MakeCallback(&TracingExample::EyWifiBurstBeginTrace, this));
+
+		</blockquote>
+		<!--For the yield phase, equally, the trace sinks will be connected to the “YieldBegin“ and “YieldEnd“ trace sources.
+		These are invoked respectively at the beggining and at the end of the yield phase.
+		<blockquote>
+		Config::Connect(
+			"NodeList/*/DeviceList/*/$ns3::WifiNetDevice/Phy/YieldBegin",
+			MakeCallback(&EyWifiYieldBeginTrace));
+		</blockquote> -->
+		<h4>Running the example</h4>
+		If you now build and run the example, 	you will see the output from the trace sink functions each time the trace source is executed:
+		<blockquote>
+		./waf --run src/ey-wifi/examples/mac-tracing-example<br>
+		Waf: Entering directory ‘/home/local/baccouch/INRIA/demo/bake/source/ns-3.16/build’ <br>
+		Waf: Leaving directory ‘/home/local/baccouch/INRIA/demo/bake/source/ns-3.16/build’ <br>
+		’build’ finished successfully (1.953s) <br>
+		Burst Begin at 0.027 slots 5 <br>
+		Burst End at 0.027055 slots 5<br>
+		PhyTxBegin 0.027082 <br>
+		PhyTxEnd 0.028526 <br>
+		Burst Begin at 0.042 slots 14 <br>
+		Burst End at 0.042135 slots 14 <br>
+		PhyTxBegin 0.042207 <br>
+		PhyTxEnd 0.043651 <br>
+		Burst Begin at 0.116 slots 16 <br>
+		Burst End at 0.116151 slots 16 <br>
+		</blockquote>
+	
+		<!--<img src="img/screenshot.png" width="500" class="center" alt="Tracing screenshot " />-->
+		<!--<blockquote>
+		<font color=#b9d203 >Waf: Entering directory `/home/local/baccouch/INRIA/ns3.12-Hipercom/ns-3.12-Hipercom/build'
+		<br>Waf: Leaving directory `/home/local/baccouch/INRIA/ns3.12-Hipercom/ns-3.12-Hipercom/build'
+		'build' finished successfully (1.426s) <br></font>
+		TxBegin at 1<br>
+		Burst Begin at 1 slots 9<br>
+		RxDrop at 1<br>
+		RxDrop at 1<br>
+		Burst End at 1.00009 slots 9<br>
+		Yield Drop at 1.00009 slots 2<br>
+		RxEnd at 1.00167<br>
+		TxBegin at 1.0017<br>
+		Burst Begin at 1.0017. slots 8<br>
+		RxDrop at 1.0017<br>
+		Burst End at 1.00178 slots 8<br>
+		Yield Begin at 100178 slots 3<br>
+		</blockquote> -->
+		
+		Now you can redirect that output in a file, and use it to get some figures of your traced data.
+		<A NAME="Plotting"><h2>Plotting graphs</h2></A>
+		Under scratch folder, you can find a script "script-plot-tx.sh" to plot the activity of the channel during the simulation of our first example.
+		you can run this script simply by typing :
+		<blockquote>
+		./scratch/script-plot-tx.sh
+		</blockquote>
+		You can open script-plot-tx.sh with your favorite editor, you should see the following script:
+		<blockquote>
+		for i in $(seq 0 2)
+		do
+		./waf --run "scratch/ey-wifi-plot-tx --nodeId=$i" > "log-node-$i.dat"
+		done
+		gnuplot scratch/plot-tx.gp
+		xdg-open plot-tx.jpeg
+		xdg-open plot-tx-zoom.jpeg
+
+		</blockquote>
+		Now, if you run the script-plot-tx.sh program, you should see two graphs.
+
+		<img src="img/plot-tx.jpeg" height="250" width="500" class="center" alt="tx-activity" /> 
+		<img src="img/plot-tx-zoom.jpeg" height="250" width="500" class="center" alt="tx-activity"/> <br>
+		The ﬁrst graph shows the transmission activity of three nodes (ON represents transmission,
+		OFF represents channel listening/receiving), during a deﬁned interval ( [[2.14,2.15]]s). The second
+		graph is just a focus on burst transmission of three nodes.
+		<br><br>
+		
+		For more complicated scenarios, we have written a python script which parses logs to plot transmission activity of many nodes (more than three).<br>
+		The "parse-channel.sh" script, executes a simple broadcast example (ey-wifi-broadcast-example.cc) and parse logs to plot the activity pf the nodes on channel.<br>
+		You can run the example, and you see immediately prints of your traces.
+		<blockquote>
+		./waf --run scratch/ey-wifi-broadcast-example<br>
+		Waf: Entering directory ‘/home/local/baccouch/INRIA/demo/bake/source/ns-3.16/build’<br>
+		Waf: Leaving directory ‘/home/local/baccouch/INRIA/demo/bake/source/ns-3.16/build’<br>
+		’build’ finished successfully (7.549s)<br>
+		0 0.013 BurstBegin 4<br>
+		0 0.013043 BurstEnd 4<br>
+		0 0.013133 PhyTxBegin 0<br>
+		0 0.014577 PhyTxEnd 0<br>
+		167 0.019 BurstBegin 7<br>
+		167 0.019071 BurstEnd 7<br>
+		167 0.019152 PhyTxBegin 2<br>
+		167 0.020596 PhyTxEnd 2<br>
+		131 0.025 BurstBegin 13<br>
+		162 0.025 BurstBegin 5<br>
+		162 0.025055 BurstEnd 5<br>
+		...
+		</blockquote>
+		Let’s redirect this output to a ﬁle named “channel-log.dat“. The “EyWiﬁChannel.py” script intend
+		to parse this log ﬁle and plot the channel status during the simulation. Since we have provided
+		the "parse-channel.sh" script, you can edit the ﬁle. It looks like :
+
+		<blockquote>
+		#!/bin/sh<br>
+		./waf --run scratch/ey-wifi-broadcast-example 2> "channel-log.dat"<br>
+		python scratch/EyWifiChannel.py <br>
+		okular ey-wifi-channel.png<br>
+		</blockquote>
+		You have just to run it, and the result should be as the figure below. <br>
+		If you intend to parse your log ﬁles using our parser, note that your logs should looks like the “channel-log.dat”.<br><br>
+		<img src="img/screenshot.png" height="250" width="500" class="center" alt="tx-activity" /> <br><br>
+
+		<!-- -----------Broadcast  -------------- -->
+		
+		<b>Broadcast Example</b><br><br>
+		The goal of the first example is to evaluate the performances of wifi and ey-wifi in broadcast context.<br> <br> 
+		<img src="img/grid-example.png" height="150" width="400"  class="center" alt="eyWifiExample" /> <br><br>
+		The <b>"script-ey-wifi-broadcast.sh" </b> script executeswiﬁ and wiﬁ with respect to the inter packet interval. The “script-ey-wiﬁ-broadcast.sh” program
+		executes the same broadcast scenario using ey-wiﬁ and wiﬁ. The scenario consists of 25 nodes
+		arranged in a grid (5*5). The distance between the nodes is ﬁxed to 5m. Nodes transmit
+		periodically packets containing 1000 bytes. The simulation run executes for 10s. <br>
+		You can run the ey-wiﬁ-broacast.cc and see immediately the traces printed in your terminal.
+		You can redirect that output to a speciﬁc ﬁle for further use. That is exactly what we do in our script “script-ey-wiﬁ-broadcast.sh“. You can now open the script in your favorite editor: <br><br>
+		<blockquote>
+		INTERVAL="1000 500 300 200 150 100 40 20 10 5 4 1"<br>
+		for inter in $INTERVAL<br>
+		do<br>
+		eywifi=$(./waf --run "scratch/ey-wifi-broadcast --interval=$inter")<br>
+		plotEyWifi="$plotEyWifi$eywifi\n"<br>
+		eywifi=""<br>
+		wifi=$(./waf --run "scratch/wifi-broadcast --interval=$inter")<br>
+		plotWifi="$plotWifi$wifi\n"<br>
+		wifi=""<br>
+		done<br>
+		echo -e $plotEyWifi > eywifi-results.tr<br>
+		echo -e $plotWifi > wifi-results.tr<br>
+		</blockquote>
+
+		As you can see, the results of both simulation for ey-wiﬁ and wiﬁ based networks are respec-
+		tively redirected to ”eywiﬁ-results.tr“ and “wiﬁ-results.tr”. Now you can run gnuplot and tell it to
+		generate graphs.
+		<blockquote>
+			gnuplot "scratch/plot-broadcast.gp"
+		</blockquote>
+		Gnuplot script is already written in plot-broadcast.gp and it is as follow :
+		<blockquote>
+		set terminal jpeg medium 8<br>
+		set ylabel "#packets"<br>
+		set xlabel "Interval"<br>
+		set output "broadcast-packets-received.jpeg"<br>
+		plot ’eywifi-results.tr’ using 4:xticlabels(1) t "Ey-wifi" w lp linecolor rgb "#f68e2f",<br>
+		’wifi-results.tr’ using 4:xticlabels(1) t "wifi" w lp linecolor rgb "#4F94CD"
+		</blockquote>
+		Now, you can simply run the following script to simulate the broadcast scenario and generate
+		the graph:
+		<blockquote>
+		./scratch/script-ey-wifi-broadcast.sh
+		</blockquote>
+		It should looks like the follwing ﬁgure :
+		<br><br>
+		<img src="img/broadcast-packets-received.jpeg" height="300" width="500" class="center" alt="broadcast"/> <br><br>
+
+
+		<!-- -----------Flooding  -------------- -->
+		<b>Flooding Example</b><br><br>
+		The second example intend to show the performance of the ﬂooding example for both protocols ey-wiﬁ and wiﬁ. The used scripts are under scratch directory : ey-wiﬁ-ﬂooding-example.cc and wiﬁ-ﬂooding-example.cc. To run both programs and plot the results, you should simply execute the “script-ey-wiﬁ-ﬂooding.sh” program.
+		<blockquote>
+		./scratch/script-ey-wifi-flooding.sh
+		</blockquote>
+		This script executes the ey-wiﬁ-ﬂooding-example and wiﬁ-ﬂooding-example for diﬀerent values of inter packets interval ﬁrstly, then it executes them by varying the density of nodes. <br>
+		The following figures show the graphs that you should obtain when you execute the above script.
+		<img src="img/flooding-packets-received.jpeg" height="300" width="500" class="center" alt="broadcast"/>
+		<img src="img/flooding-density-packets-received.jpeg" height="300" width="500" class="center" alt="broadcast"/><br><br>
+		<!-- -----------Unicast -------------- -->
+
+		<b>Unicast Example</b><br><br>
+		The goal of the third example is to compare the performance of both ey-wiﬁ and wiﬁ based networks in unicast context. The scenario is composed of 100 nodes are arranged in grid. The step is ﬁxed to 5 meter. The simulation run for 10s. The used script is “script-ey-wiﬁ-unicast.sh”.
+
+		This script executes ey-wiﬁ-unicast-example and wiﬁ-unicast-example.
+		<br> As ﬂooding example, we compute the number of received packets by varying ﬁrstly the inter packet interval. Then we
+		increase the density and compute the same metric. You can run the script, it will take some time to plot two graphs. It should looks like ﬁgures below.<br><br>
+		<img src="img/unicast-packets-received.jpeg" height="300" width="500" class="center" alt="broadcast"/>
+		<img src="img/unicast-packets-received-density.jpeg" height="300" width="500" class="center" alt="broadcast"/>
+		
+		<!--<h2>Using tracing system</h2>
+
+		<p> bla bla  </p>
+		<blockquote>
+		</blockquote>
+		-->
+		
+	</div>
+	
+
+	<div id="footer">
+		<p><span>&copy; 2012 <a href="#">Inria - Hipercom project</a></span><br />
+		<img src="img/logo-inria.png" height="40" width="100" class="center" alt="Example content image" />
+	<!-- 	<a href="http://andreasviklund.com/templates/" title="Original CSS template design">Original design</a> by <a href="http://andreasviklund.com/" title="Andreas Viklund">Andreas Viklund</a> | Modified by <a href="http://Jasoncole.ca">Jason Cole</a></p> -->
+	</div>
+
+</div>
+</body>
+</html>

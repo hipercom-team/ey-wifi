@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="description" content="Your description goes here" />
+  <meta name="keywords" content="your,keywords,goes,here" />
+  <meta name="author" content="Your Name" />
+  <link rel="stylesheet" type="text/css" href="andreas00.css" media="screen,projection" />
+  <title>Ey-Wifi Module for ns-3 simulator</title>
+</head>
+
+<body>
+<div id="wrap">
+	<div id="header">
+	 <font color=#FAFAFA >	<h1></h1>
+	<p><b><h2></h2></b></p>
+	</font> 
+	</div>
+
+	<div id="leftside">
+		<h2 class="hide">Sample menu:</h2>
+		<ul class="avmenu">
+			<li><a class="current" href="index.html">Home</a></li>
+			<li><a href="mobsim-project.html">MobSim Project</a></li>
+			<li><a href="publications.html">Documentation</a></li>
+			<li><a href="download.html">Download</a></li>
+			<li><a href="support.html">Tutorial</a></li>
+			<li><a href="contact-us.html">Contact</a></li>
+		</ul>
+
+		
+	</div>
+
+	<div id="extras">
+		
+	<img src="img/logo-inria.png" height="60" width="200" class="center" alt="Example content image" />
+		<h2>Related links:</h2>
+		<ul>
+			<li><a href="http://www.nsnam.org/">ns-3 network simulator </a></li>
+			<li><a href="http://hipercom.inria.fr/">Hipercom project</a></li>
+			
+		</ul>
+
+		<h2>Version:</h2>
+		<p>ns-3.16<br />
+		(October, 2013)</p>
+		<div class="announce">
+			<h2>News:</h2>
+			<p><strong>October 2013:</strong><br />
+			<p> Ey-Wifi first release. </p>
+			<!--Paper accepted on PEMWN workshop</p>
+			<p>First International Workshop on Performance Evaluation and Modelling in Wireless Networks held in Tunisia</p>
+			<p class="textright"><a href="https://sites.google.com/site/2012pemwn/home">PEMWN&raquo;</a></p> -->
+		</div>
+	</div>
+
+    <div id="content">
+    	<h1>Overview</h1>
+		<h2>What is Ey-Wifi?</h2>
+		<br>
+	
+			<p> <b> Ey-Wifi</b> Ey-Wifi module is  a ns-3 module developed within Mobsim project. <b> Ey-Wifi</b> stands for Elimination-Yield for Wifi networks. 
+			The main goal of <b> Ey-Wifi</b> is to integrate the features of the
+			<b>EY-NPMA</b> channel access scheme in the  <b>ns-3 Wifi </b> module. <br>
+			EY-NPMA (Elimination-Yield Non-Pre-emptive Priority Multiple Access) is a contention based protocol that has been used as the medium access scheme in HIPERLAN type 1.<br>
+			The main advantages of EY-NPMA are : low collision rate, more determinism and priority support.<br>
+			Compared to Wifi, EY-NPMA adds the transmission of a burst in the elimination phase: it reduces the number of nodes, that will compete in next  "yield" phase (equivalent to the contention window based access of WiFi)<br>
+		
+		<br>
+		
+		<h3>What is ns-3?</h3>
+		
+		<p><img src="img/ns-3.png" class="left" alt="ns-3" /> <a href="http://www.nsnam.org">ns-3</a> is a discrete-event network simulator for Internet systems, targeted primarily for research and educational use. ns-3 is free software, licensed under the GNU GPLv2 license, and is publicly available for research, development, and use.</p>
+		
+		</p>
+		<br>
+	
+		<h3>What is EY-NPMA?</h3>
+		<p><b>EY-NPMA</b> stands for Elimination-Yield Non-Pre-emptive
+		Priority Multiple Access. <b>EY-NPMA</b> is a contention based
+		protocol that has been used as the medium access scheme in
+		HIPERLAN type 1. <b>EY-NPMA</b> is based on active signaling(black burst): a node requests access to the medium by transmitting a burst signal.<br>
+		The channel access cycle comprises three phases : priority phase, elimination phase and yield phase.<br><br>
+		<img src="img/ey-npma.png"  height="280" width="520" class="center" alt="EY-NPMA" />
+		<h4>Why Ey-NPMA?</h4>
+		<ul> 
+			<li><b>Support for Quality of Service (QoS)</b>: EY-NPMA implements prioritized access wich is very important for delay sensitive applications.</li>
+			<li><b>Low collision rates</b>: EY-NPMA has the capability to reduce the hidden node collisions.	</li>
+			<li><b>More deterministic</b>: EY-NPMA access schemes is composed of three phases, each of them reduce the number of contending  nodes. At the end, only few nodes remain to 				continue to the last phase.</li>
+		</ul>
+		For more details, check the <a href="publications.html"> documentation</a>.
+		</p>
+		
+		<h2>Ey-Wifi module</h2>
+		<p>The 802.11 MAC is similar to some parts of
+		<b>EY-NPMA</b>. This is specially true for the variants of enhanced
+		distributed channel access (EDCA) of 802.11e which
+		include a similar mechanism to the “priority phase” of <b>EY-NPMA</b>.<br>
+		Hence, from the conceptual point of view, the main addition
+		of <b>Ey-Wifi</b>, is the addition of the elimination phase, with
+		the transmission of a burst. The start of the slots, and their
+		duration, are selected to be identical to the 802.11 variant
+		considered (SIFS is respected etc.). 
+		The transmission of the
+		burst is done, as mentioned in Hiperlan standard, with a
+		modulation similar to the preamble in 802.11.<br>
+		In addition, the yield phase can be adjusted, because of the
+		lower probability of collision after the elimination phase: it is
+		not necessary to apply the update of the contention windows
+		over several periods of inactivity of the wireless channel.
+		Instead, in the yield phase, a new (small) number of slots is
+		selected every time, leading to a shorter average access time.<br>
+		<blockquote>
+		Our main contribution is the implementation of th <b>EY-NPMA</b>
+		scheme in Wifi networks in the ns-3 simulator, while
+		maintaining the interoperability of the module with Wifi nodes.
+		We aim to implement a configurable module which may enable
+		simulation at once Wifi nodes and <b>Ey-Wifi</b> nodes in the ns-3 simulator.
+		</blockquote>
+		<p>
+	</div>
+
+	<div id="footer">
+		<p><span>&copy; 2013 <a href="#">Inria - Hipercom project</a></span><br />
+		<img src="img/logo-inria.png" height="40" width="100" class="center" alt="Example content image" />
+	<!-- 	<a href="http://andreasviklund.com/templates/" title="Original CSS template design">Original design</a> by <a href="http://andreasviklund.com/" title="Andreas Viklund">Andreas Viklund</a> | Modified by <a href="http://Jasoncole.ca">Jason Cole</a></p> -->
+	</div>
+
+</div>
+</body>
+</html>
